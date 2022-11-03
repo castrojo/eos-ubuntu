@@ -2,6 +2,8 @@
 
 This script turns an EndlessOS installation into a more traditional "Ubuntu desktop".
 
+![image](https://user-images.githubusercontent.com/1264109/199630767-21f98373-f668-4e29-a22f-dfaaea984cf9.png)
+
 ## Userspace 
 
 Distrobox is automatically installed and the following shortcuts are set:
