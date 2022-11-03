@@ -19,6 +19,7 @@ mkdir -p ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/
 unzip dash-to-dock@micxgx.gmail.com.zip \
 -d ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/
 gnome-extensions disable eos-desktop@endlessm.com
+gnome-extensions disable eos-panel@endlessm.com
 gnome-extensions enable dash-to-dock@micxgx.gmail.com
 
 dconf write /org/gnome/shell/favorite-apps "['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Rhythmbox3.desktop', 'org.libreoffice.LibreOffice.writer.desktop', 'org.gnome.Software.desktop', 'yelp.desktop']"
