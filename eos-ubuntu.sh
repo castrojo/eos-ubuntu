@@ -7,14 +7,20 @@ set -eux
 dconf write /org/gnome/shell/disable-extension-version-validation "true" #yolo
 dconf write /org/gnome/shell/disable-user-extensions "false"
 
-flatpak install org.mozilla.firefox org.mozilla.Thunderbird -y
+echo "Installing Firefox, Thunderbird, and codecs"
+echo "We'll need sudo for this ..."
+sudo flatpak install org.mozilla.firefox org.mozilla.Thunderbird org.freedesktop.Platform.ffmpeg-full//22.08 -y
 
+echo "Installing Distrobox"
 wget -qO- "https://raw.githubusercontent.com/89luca89/distrobox/main/install" | sudo sh
+echo "Installing Ubuntu userspace"
 distrobox-create -Y -i public.ecr.aws/ubuntu/ubuntu:latest -n ubuntu-toolbox
+echo "Installing Debian userspace"
 distrobox-create -Y -i public.ecr.aws/debian/debian:stable --name debian-toolbox
 ./bits/distrobox-terminal-profile.sh -n ubuntu-toolbox -c ubuntu-toolbox -s "<Primary><Alt>u" 
 ./bits/distrobox-terminal-profile.sh -n debian-toolbox -c debian-toolbox -s "<Primary><Alt>t" 
 
+echo "Installing dash to dock and disabling eOS customizations..."
 mkdir -p ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/
 unzip dash-to-dock@micxgx.gmail.com.zip \
 -d ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/
@@ -22,7 +28,8 @@ gnome-extensions disable eos-desktop@endlessm.com
 gnome-extensions disable eos-panel@endlessm.com
 gnome-extensions enable dash-to-dock@micxgx.gmail.com
 
-dconf write /org/gnome/shell/favorite-apps "['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Rhythmbox3.desktop', 'org.libreoffice.LibreOffice.writer.desktop', 'org.gnome.Software.desktop', 'yelp.desktop']"
+echo "Setting an Ubuntu dock"
+dconf write /org/gnome/shell/favorite-apps "['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Rhythmbox3.desktop', 'org.libreoffice.LibreOffice.writer.desktop', 'org.gnome.Software.desktop', 'ubuntu-toolbox.desktop', 'yelp.desktop']"
 
 dconf write /org/gnome/shell/extensions/dash-to-dock/activate-single-window "true"
 dconf write /org/gnome/shell/extensions/dash-to-dock/animate-show-apps "true"
@@ -114,3 +121,6 @@ dconf write /org/gnome/shell/extensions/dash-to-dock/show-trash "true"
 dconf write /org/gnome/shell/extensions/dash-to-dock/show-windows-preview "true"
 dconf write /org/gnome/shell/extensions/dash-to-dock/transparency-mode "'FIXED'"
 dconf write /org/gnome/shell/extensions/dash-to-dock/unity-backlit-items "false"
+
+echo "You need to logout and back in!"
+gnome-session-quit
