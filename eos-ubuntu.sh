@@ -8,16 +8,18 @@ dconf write /org/gnome/shell/disable-extension-version-validation "true" #yolo
 dconf write /org/gnome/shell/disable-user-extensions "false"
 
 flatpak install org.mozilla.firefox org.mozilla.Thunderbird -y
-unzip dash-to-dock@micxgx.gmail.com.zip \
--d ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/
-gnome-extensions disable eos-desktop@endlessm.com
-gnome-extensions enable dash-to-dock@micxgx.gmail.com
 
 wget -qO- "https://raw.githubusercontent.com/89luca89/distrobox/main/install" | sudo sh
 distrobox-create -Y -i public.ecr.aws/ubuntu/ubuntu:latest -n ubuntu-toolbox
 distrobox-create -Y -i public.ecr.aws/debian/debian:stable --name debian-toolbox
 ./bits/distrobox-terminal-profile.sh -n ubuntu-toolbox -c ubuntu-toolbox -s "<Primary><Alt>u" 
 ./bits/distrobox-terminal-profile.sh -n debian-toolbox -c debian-toolbox -s "<Primary><Alt>t" 
+
+mkdir -p ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/
+unzip dash-to-dock@micxgx.gmail.com.zip \
+-d ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/
+gnome-extensions disable eos-desktop@endlessm.com
+gnome-extensions enable dash-to-dock@micxgx.gmail.com
 
 dconf write /org/gnome/shell/favorite-apps "['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Rhythmbox3.desktop', 'org.libreoffice.LibreOffice.writer.desktop', 'org.gnome.Software.desktop', 'yelp.desktop']"
 
